@@ -18,7 +18,7 @@ db.serialize(() => {
     stmt.finalize();
 });
 
-app.post('/inject', (req, res) => {
+app.post('https://sql-injection-demo-production.up.railway.app/inject', (req, res) => {
     const { query } = req.body;
     console.log('Received query:', query);
     db.all(query, [], (err, rows) => {

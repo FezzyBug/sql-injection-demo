@@ -2,17 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
-const path = require('path');
-// const helmet = require('helmet');  // Commenting out helmet for now
-
 const app = express();
-const port = process.env.PORT || 4080;
+const port = 4080;
 
 app.use(bodyParser.json());
 app.use(cors());
-
-// Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 let db = new sqlite3.Database(':memory:');
 
@@ -32,14 +26,10 @@ app.post('/inject', (req, res) => {
             console.error("An error occurred with the executed query:", err.message);
             res.status(500).send(err.message);
         } else {
+            console.log("Executed query was a success and returned: " + res.send(rows));
             res.send(rows);
         }
     });
-});
-
-// All other GET requests not handled before will return the React app
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });
 
 app.listen(port, () => {

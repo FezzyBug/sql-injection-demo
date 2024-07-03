@@ -7,7 +7,7 @@ const InjectionForm = ({ setLogs }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://sql-injection-demo-production.up.railway.app/inject', { query });
+            const response = await axios.post('http://localhost:4080/inject', { query });
             setLogs(prevLogs => [...prevLogs, { query, result: response.data }]);
         } catch (error) {
             setLogs(prevLogs => [...prevLogs, { query, error: error.message }]);
